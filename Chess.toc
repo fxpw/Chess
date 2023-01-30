@@ -1,0 +1,54 @@
+## Interface: 30300 
+## Author: smariot
+## Title: Chess
+## Title-deDE: Schach
+## Title-frFR: Échecs
+## Title-koKR: 체스
+## Title-zhCN: 國際象棋
+## Title-zhTW: 國際象棋
+## Title-esES: Ajedrez
+## Title-esMX: Ajedrez
+## Version: 1.1
+## SavedVariables: Chess_Scores, Chess_Games, Chess_SuspendedGames
+## X-Curse-Packaged-Version: 1.5
+## X-Curse-Project-Name: Chess
+## X-Curse-Project-ID: chess
+## X-Curse-Repository-ID: wow/chess/mainline
+
+# The glue holding everything together.
+init.lua
+
+# Functions for recycling tables and textures.
+recycle.lua
+
+# A structure preresenting the state of a chess game.
+state.lua
+
+# For checking if the king is in check.
+check.lua
+
+# For enumerating the moves a piece can make.
+pawn.lua
+rook.lua
+knight.lua
+bishop.lua
+queen.lua
+king.lua
+
+# AI
+ai.lua
+
+# Convert between move numbers and Algebraic Chess Notation.
+name.lua
+
+# Common functions used by frames.
+frame.lua
+
+# Search for an opponent.
+findopponent.lua
+
+# Frame for displaying saved games.
+saved_frame.lua
+
+# The main program.
+chess.lua

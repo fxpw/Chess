@@ -1,0 +1,12 @@
+{
+    "Lua.diagnostics.globals": [
+        "DEFAULT_CHAT_FRAME",
+        "SlashCmdList",
+        "ChatFrame_SendTell",
+        "GetCursorPosition",
+        "STANDARD_TEXT_FONT",
+        "FauxScrollFrame_Update",
+        "FauxScrollFrame_OnVerticalScroll",
+        "FauxScrollFrame_GetOffset"
+    ]
+}

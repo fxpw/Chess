@@ -1,0 +1,176 @@
+#!/usr/bin/env lua
+
+io.stderr:write("This program is to be invoked by xboard (or a program supporting its protocol).\n")
+
+local logfile = assert(io.open("wowchess.log", "w"))
+
+_G.print = function(...)
+  local text = table.concat({...}, "\t")
+  logfile:write(text, "\n")
+  logfile:flush()
+  io.stderr:write(text, "\n")
+end
+
+assert(loadfile("glue.lua"))()
+
+local function send(line)
+  print("<< "..line)
+  io.stdout:write(line, "\n")
+  io.stdout:flush()
+end
+
+local function recv()
+  local line = io.stdin:read("*line")
+  if line then
+    print(">> "..line)
+    return line
+  end
+end
+
+local commands = {}
+local game = nil
+local force_mode = true
+
+function commands.force() force_mode = true end
+function commands.quit() os.exit(0) end
+function commands.xboard() end -- Meaningless.
+function commands.accepted() end -- Ignored.
+function commands.rejected(what)
+  if what == "usermove" or what == "colors" or what == "san" then
+    -- These features are required.
+    exit(1)
+  end
+end
+function commands.easy() end -- Ignored. Always easy.
+function commands.hard() end -- Ignored.
+function commands.random() end -- Ignored.
+function commands.level() end -- Timing ignored.
+function commands.protover()
+  send("feature myname=\"wowchess\" variants=\"normal\" ping=1 usermove=1 san=1 time=0 sigint=0 sigterm=0 analyze=0 colors=0 done=1")
+end
+function commands.ping(x) send("pong "..x) end
+function commands.random() end
+
+function commands.new()
+  commands.result()
+  game = newState()
+  force_mode = false
+end
+
+function commands.result()
+  if game then
+    deleteState(game)
+    game = nil
+    force_mode = true
+    collectgarbage("collect")
+  end
+end
+
+local retmap =
+ { white = "1-0 {White mates}",
+   draw = "1/2-1/2 {Stalemate}",
+   black = "0-1 {Black mates}" }
+
+local function printState(state)
+  print("Move: "..-state.n)
+  local map = {
+    [-6]=" K",
+    [-5]=" Q",
+    [-4]=" B",
+    [-3]=" N",
+    [-2]=" R",
+    [-1]=" P",
+    [0]=" .",
+    [1]=" p",
+    [2]=" r",
+    [3]=" n",
+    [4]=" b",
+    [5]=" q",
+    [6]=" k",
+  }
+  
+  print("    a b c d e f g h")
+  print("")
+  for i = 56,0,-8 do
+    local line = (i/8+1).."  "
+    for j = 0,7 do
+      line = line .. map[state[i+j]]
+    end
+    print(line)
+  end
+end
+
+function commands.usermove(name)
+  if not game then commands.new() end
+  local move = nameToMove(game, name)
+  if move then
+    local name, ret = moveToName(game, move)
+    doMoveNoWeight(game, move)
+    printState(game)
+    
+    if ret then
+      send(retmap[ret])
+    elseif not force_mode then
+      commands.go()
+    end
+  else
+    send("Illegal move: "..name)
+  end
+end
+
+function commands.go()
+  force_mode = false
+  
+  if not game then commands.new() end
+  
+  local done = false
+  io.stderr:write("Thinking")
+  while not done and (not game.states or usedTables() < 5*15000) do
+    io.stderr:write(".")
+    for i = 1,30 do
+      if calcScore(game) then done = true break end
+    end
+  end
+  io.stderr:write("\n")
+  
+  if game.states == 63 then
+    send("Error: can't go, no moves possible.")
+  else
+    local move = game[game.states].move
+    local n, dest = game[math.floor(move/64)], move%64
+    
+    if (n == 1 and dest > 55) or (n == -1 and dest < 8) then
+      -- This is a pawn pawn promotion, fix the computer's move.
+      move = move + 16384
+    end
+    
+    local name, ret = moveToName(game, move, true)
+    
+    send("move "..name)
+    doMoveNoWeight(game, move)
+    printState(game)
+    
+    if ret then
+      send(retmap[ret])
+    end
+  end
+end
+
+while true do
+  local line = recv()
+  
+  if line == nil then
+    print("Unexpected EOF")
+    os.exit(1)
+  end
+  
+  if line ~= "" and not line:find("^%s") then
+    local command, args = line:match("^([^%s]*)%s*(.*)")
+    local handler = commands[command]
+    if handler then
+      handler(args)
+    else
+      send("Error (unknown command): "..line)
+    end
+  end
+end

@@ -1,0 +1,112 @@
+== Installing ==
+
+Completely exit World of Warcraft, and copy the Chess directory from the Chess.zip archive to the Interface/AddOns directory where World of Warcraft was installed.
+
+In Windows, this will usually be:
+
+  C:\Program Files\World of Warcraft\Interface\AddOns
+In a Macintosh, this will usually be:
+
+  /Applications/World of Warcraft/Interface/AddOns
+
+== Usage ==
+
+=== Menu ===
+
+Type '/chess' to display a menu for starting chess games.
+
+==== VS Computer Black ====
+
+Start a game with the computer playing black.
+
+==== VS Computer White ====
+
+Start a game with the computer playing white.
+
+==== VS Target ====
+
+Start a game with your selected target. Be sure to ask them first, as the whispers sent to them will probably get you ignored or reported for spamming.
+
+==== Find Opponent ====
+
+Find another player in your realm and faction that is also looking for an opponent, and start a game with them. The odds of you actually finding someone are slim to none.
+
+==== Past Games ====
+
+Lists your previously played games. Clicking on an item will display that game, and let you review the history of that game.
+
+=== Multiplayer ===
+
+When playing against another player, moves will be whispered with them using algebraic chess notation. Technically, the other player doesn't need to have this AddOn and can manually whisper their moves back to you, but who would want to bother?
+
+The position of white is first come, first serve. As soon as one player moves a white piece, the other player is forced to play black.
+
+=== Playing ===
+
+Click on the piece you want to move, and then click where you want to move it.
+
+You can also drag the piece where you want it. The piece won't move unless you release the mouse button on a valid square.
+
+==== Title ====
+
+The title contains the names of the players, with white on the left, and black on the right.
+
+The background of the title is the colour of the player who is to move next. It will be light or dark grey when the the game is over, or not displaying the most recent move.
+
+If one player appears to be better than the other, the better player has their chance of winning displayed beside their name.
+
+==== Move History ====
+
+There are two arrow buttons at the bottom of the game window. Pressing them will go backwards or forwards through the game history.
+
+You can't move pieces if you aren't viewing the most recent move.
+
+If your opponent moves while you're viewing an older point in the game, the game will be advanced forward to the most recent move.
+
+==== Castling ====
+
+To castle, move the king to where it would be after castling. The rook will be moved for you automatically. Moving the rook will only move the rook, and not castle.
+
+==== En Passant Captures ====
+
+These are performed by capturing the square a pawn passed through with your own pawn. The enemy pawn will be moved back to that square and captured.
+
+==== Promotions ====
+
+When you try to move a pawn to the highest rank, a small window will appear under your cursor, allowing you to choose the what to promote that pawn to.
+
+==== Resignation ====
+
+If you click the resign button, you lose and the other player wins.
+
+Closing the game window, reloading the user interface, or logging out have the same effect as clicking the resign button.
+
+As a feature, if it is currently your turn and you're entitled to claim a draw, this will draw the game instead.
+
+The computer will never resign.
+
+==== Drawing ====
+
+If it is your turn and either 50 moves have been made without a capture or a pawn move, or if the game has been in this same state (pieces in the same places, each with the exact same moves available) then you are entitled to claim a draw.
+
+If it is your turn but those other conditions don't apply, then you can instead propose a draw. If the other player accepts, then the game ends. Note that the other player can't reject the proposal, they must either accept it or you must make a move for the game to continue.
+
+The computer will never propose or claim a draw. It will however accept a proposed draw if 25 moves have been made without a capture or a pawn move.
+
+== Bugs ==
+
+* All computer games share the same memory pool. If you have more than one at the same time, then as the AI in one game discards unplayed game paths, the AI in the other games will snatch it for themselves, leaving the first with no memory to explore. It will still be able to play, but will do so very badly.
+* There needs to be a time limit for making moves, so that someone will eventually lose if they stop playing.
+
+== Incompatibilities ==
+
+Versions before 1.3 are completely incompatible with later versions.
+Version 1.3 won't accept non-queen pawn promotions from versions 1.4 and later.
+
+== Credits ==
+
+The large chess piece images were drawn by Maurizio Monge and released under the LGPL2 license. The original files from which they were created are in the Fantasy directory.
+
+The small chess figure images were generated from the freeware font FigurineSymbol created by Armando Hernández Marroquín.
+
+Everything else was created by myself, Tyson Brown, and is covered under the GPL3 license.

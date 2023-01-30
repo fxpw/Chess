@@ -1,0 +1,9 @@
+This is a wrapper program to make the Chess AddOn speak the xboard protocol.
+
+There's absolutely no good reason to want to do such a thing; it was just an interesting project.
+
+There are two relevent scripts here:
+
+wowchess: A lua script implementing the xboard protocol over stdin/stdout, with extra diagnostic information on stderr. It's actually slightly slower than the WoW version, because it doesn't search during its opponents turn.
+
+launch: A bash script that launches xboard and tells it to use the wowchess script for the computer players.

@@ -1,0 +1,11 @@
+#!/bin/bash
+rm -f wowchess.log
+touch wowchess.log
+CHESSDIR=${PWD} xboard -fcp ./wowchess -scp ./wowchess &
+XBOARD_PID=$!
+sleep 1
+tailf wowchess.log &
+TAILF_PID=$!
+wait $XBOARD_PID
+kill -9 $TAILF_PID
+echo "Done."

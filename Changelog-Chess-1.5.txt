@@ -1,0 +1,27 @@
+tag 1.5
+2b286d03f72ee2f1d984583934c1b993d1a934b3
+smariot <smariot@gmail.com>
+2010-10-07 12:22:15 +0000
+
+The 'Holy crap it's been a while' release; aka, 1.5
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.16 (GNU/Linux)
+
+iEYEABECAAYFAkytu64ACgkQPImfE9laVHIFLwCeLJyJaL/OppTsalczOUR59FCh
+TB4Amwcgq0ooJlsrSPGnfWLCD/rDI6Oa
+=k5g4
+-----END PGP SIGNATURE-----
+
+
+--------------------
+
+smariot:
+	- Made pieces move a little faster, and added acceleration and deceleration to their movements.
+	- When the game ends, display the winner in the title bar.
+	- Made dates for saved games prettier, and add a button to delete them, and have display a message saying there aren't any games rather than displaying an empty window.
+	- Turns out I had the move names recorded, so redrawHistory() doesn't need to figure them out each time.
+	- Save any games that are still running when the player logs out, and restore them when they return.
+	- Added a pretty window for displaying and transversing game history.
+	- Quick hack to make my scrollbars work again.
+	- Update the TOC version so the thing will actually get loaded.
+	- I had at some point written an xboard client for this AddOn. For what purpose, I do not know, but I'll commit it all the same.
